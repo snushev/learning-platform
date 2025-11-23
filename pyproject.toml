@@ -1,0 +1,7 @@
+[tool.black]
+line-length = 119
+extend-exclude = '''
+	"migrations/" = true
+	".venv/" = true
+	"__pycache__/" = true
+'''

@@ -1,0 +1,25 @@
+[flake8]
+max-line-length = 119
+extend-ignore =
+    E203,
+    E266,
+    W503,
+    E501,
+    C901,
+    F401
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    env,
+    migrations,
+    .vscode,
+    .idea,
+    build,
+    dist,
+    *.min.js,
+    node_modules
+per-file-ignores =
+    __init__.py:F401
+    tests/*:S101
