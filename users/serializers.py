@@ -8,7 +8,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["username", "email", "password", "first_name", "last_name"]
+        fields = ["username", "email", "password", "first_name", "last_name", "role"]
 
     def create(self, validated_data):
         user = User.objects.create_user(
@@ -25,19 +25,23 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
+    login = serializers.CharField()
     password = serializers.CharField(write_only=True)
 
     def validate(self, data):
-        username = data.get("username")
+        login = data.get("login")
         password = data.get("password")
-
-        if username and password:
-            user = authenticate(username=username, password=password)
-            if not user:
-                raise serializers.ValidationError("Invalid username or password")
-        else:
-            raise serializers.ValidationError("Both fields are required")
+        
+        try:
+            if '@' in login:
+                user = User.objects.get(email=login)
+            else:
+                user = User.objects.get(username=login)
+        except User.DoesNotExist:
+            raise serializers.ValidationError("Invalid credentials")
+        
+        if not user.check_password(password):
+            raise serializers.ValidationError("Invalid credentials")
 
         data["user"] = user
         return data
