@@ -3,10 +3,9 @@ import time
 import socket
 
 
-
 def wait_for_db():
-    host = config('DB_HOST', default='db')
-    port = int(config('DB_PORT', default=5432))
+    host = config("DB_HOST", default="db")
+    port = int(config("DB_PORT", default=5432))
 
     while True:
         try:

@@ -4,24 +4,22 @@ from .models import User
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True,
-                                     required=True,
-                                     min_length=6)
+    password = serializers.CharField(write_only=True, required=True, min_length=6)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password', 'first_name', 'last_name']
+        fields = ["username", "email", "password", "first_name", "last_name"]
 
     def create(self, validated_data):
         user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password'],
-            first_name=validated_data.get('first_name'),
-            last_name=validated_data.get('last_name'),
-            profile_picture=validadte_data.get('profile_picture'),
-            bio=validate_data.get('bio'),
-            role=validate_data.get('role', 'Student')
+            username=validated_data["username"],
+            email=validated_data["email"],
+            password=validated_data["password"],
+            first_name=validated_data.get("first_name", ''),
+            last_name=validated_data.get("last_name", ''),
+            profile_picture=validated_data.get("profile_picture"),
+            bio=validated_data.get("bio"),
+            role=validated_data.get("role", "Student"),
         )
         return user
 
@@ -35,30 +33,41 @@ class LoginSerializer(serializers.Serializer):
         password = data.get("password")
 
         if username and password:
-            user = authenticate(username=username,
-                                password=password)
+            user = authenticate(username=username, password=password)
             if not user:
-                raise serializers.ValidationError(
-                    "Invalid username or password")
+                raise serializers.ValidationError("Invalid username or password")
         else:
             raise serializers.ValidationError("Both fields are required")
 
         data["user"] = user
         return data
 
+
 class UserProfileSerializer(serializers.ModelSerializer):
+    profile_picture = serializers.ImageField(required=False, allow_null=True)
+
     class Meta:
         model = User
         fields = [
-            'id',
-            'username', 
-            'email',
-            'first_name',
-            'last_name',
-            'profile_picture',
-            'bio',
-            'role',
-            'date_joined',
-            'last_login'
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "profile_picture",
+            "bio",
+            "role",
+            "date_joined",
+            "last_login",
         ]
-        read_only_fields = ['id', 'date_joined', 'last_login', 'username']
+        read_only_fields = ["id", "date_joined", "last_login", "username"]
+
+    def update(self, instance, validated_data):
+        profile_picture = validated_data.pop('profile_picture', None)
+        
+        if profile_picture:
+            if instance.profile_picture:
+                instance.profile_picture.delete(save=False)
+            instance.profile_picture = profile_picture
+        
+        return super().update(instance, validated_data)
