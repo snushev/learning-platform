@@ -6,6 +6,6 @@ class User(AbstractUser):
     ROLES = (("Instructor", "Instructor"), ("Student", "Student"))
 
     email = models.EmailField(max_length=100, unique=True)
-    profile_picture = models.ImageField(blank=True, null=True, upload_to='profile_pictures/')
+    profile_picture = models.ImageField(blank=True, null=True, upload_to="profile_pictures/")
     bio = models.TextField(blank=True, null=True)
     role = models.CharField(max_length=20, choices=ROLES)

@@ -15,8 +15,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             username=validated_data["username"],
             email=validated_data["email"],
             password=validated_data["password"],
-            first_name=validated_data.get("first_name", ''),
-            last_name=validated_data.get("last_name", ''),
+            first_name=validated_data.get("first_name", ""),
+            last_name=validated_data.get("last_name", ""),
             profile_picture=validated_data.get("profile_picture"),
             bio=validated_data.get("bio"),
             role=validated_data.get("role", "Student"),
@@ -31,15 +31,15 @@ class LoginSerializer(serializers.Serializer):
     def validate(self, data):
         login = data.get("login")
         password = data.get("password")
-        
+
         try:
-            if '@' in login:
+            if "@" in login:
                 user = User.objects.get(email=login)
             else:
                 user = User.objects.get(username=login)
         except User.DoesNotExist:
             raise serializers.ValidationError("Invalid credentials")
-        
+
         if not user.check_password(password):
             raise serializers.ValidationError("Invalid credentials")
 
@@ -67,11 +67,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", "date_joined", "last_login", "username"]
 
     def update(self, instance, validated_data):
-        profile_picture = validated_data.pop('profile_picture', None)
-        
+        profile_picture = validated_data.pop("profile_picture", None)
+
         if profile_picture:
             if instance.profile_picture:
                 instance.profile_picture.delete(save=False)
             instance.profile_picture = profile_picture
-        
+
         return super().update(instance, validated_data)
