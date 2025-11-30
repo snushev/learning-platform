@@ -30,6 +30,7 @@ urlpatterns = [
     path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/users/", include("users.urls")),
     path("api/", include("courses.urls")),
+    path("api/", include("lessons.urls"))
 ]
 
 if settings.DEBUG:
