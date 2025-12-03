@@ -1,8 +1,8 @@
 from rest_framework import viewsets
-from .models import Lesson
-from .serializers import LessonSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.exceptions import PermissionDenied
+from .models import Lesson
+from .serializers import LessonSerializer
 
 
 class LessonViewset(viewsets.ModelViewSet):
@@ -12,11 +12,6 @@ class LessonViewset(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     ordering = ['order']
     filterset_fields = ['course']
-
-    def perform_create(self, serializer):
-        if course.instructor != self.request.user:
-            raise PermissionDenied("You can only create lessons for your own courses")
-        serializer.save()
 
     def perform_update(self, serializer):
         if serializer.instance.course.instructor != self.request.user:

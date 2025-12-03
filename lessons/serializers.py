@@ -15,3 +15,9 @@ class LessonSerializer(serializers.ModelSerializer):
         model = Lesson
         fields = '__all__'
         read_only_fields = ['course', 'id', 'created_at','updated_at']
+
+class SimpleLessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = ['id', 'title', 'order']
+    
