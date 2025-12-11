@@ -75,3 +75,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
             instance.profile_picture = profile_picture
 
         return super().update(instance, validated_data)
+
+
+class BasicUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'profile_picture']

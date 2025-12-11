@@ -10,8 +10,8 @@ class LessonViewset(viewsets.ModelViewSet):
 
     serializer_class = LessonSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
-    ordering = ['order']
-    filterset_fields = ['course']
+    ordering = ["order"]
+    filterset_fields = ["course"]
 
     def perform_update(self, serializer):
         if serializer.instance.course.instructor != self.request.user:
@@ -19,7 +19,7 @@ class LessonViewset(viewsets.ModelViewSet):
         serializer.save()
 
     def perform_create(self, serializer):
-        course = serializer.validated_data.get('course')
+        course = serializer.validated_data.get("course")
         if course.instructor != self.request.user:
             raise PermissionDenied("You can only create lessons for your own courses")
         serializer.save()

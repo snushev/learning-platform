@@ -15,7 +15,7 @@ class QuizQuestionInline(admin.StackedInline):
 
 class QuizAdmin(admin.ModelAdmin):
     inlines = [QuizQuestionInline]
-    list_display = ['title', 'course', 'passing_score', 'max_attempts']
+    list_display = ["title", "course", "passing_score", "max_attempts"]
 
 
 admin.site.register(Quiz, QuizAdmin)

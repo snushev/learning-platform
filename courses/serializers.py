@@ -35,13 +35,10 @@ class CourseSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ["id", "instructor", "enrollment_count", "created_at", "updated_at"]
 
+
 class SimpleCourseSerializer(serializers.ModelSerializer):
     instructor = UserProfileSerializer(read_only=True)
 
     class Meta:
         model = Course
-        fields = [
-            'title',
-            'instructor',
-            'image'
-        ]
+        fields = ["title", "instructor", "image"]

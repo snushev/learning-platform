@@ -16,12 +16,12 @@ class Enrollment(models.Model):
         return f"{self.student.username} enrolled in {self.course.title}"
 
     class Meta:
-        unique_together = ['student', 'course']
-    
+        unique_together = ["student", "course"]
+
 
 class LessonProgress(models.Model):
-    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE, related_name='lesson_progress')
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name='lesson_progress_items')
+    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE, related_name="lesson_progress")
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, related_name="lesson_progress_items")
     is_viewed = models.BooleanField(default=False)
     completion_percentage = models.IntegerField(default=0)
     completed_at = models.DateTimeField(null=True, blank=True)
@@ -30,4 +30,4 @@ class LessonProgress(models.Model):
         return f"{self.enrollment.student.username} - {self.lesson.title}"
 
     class Meta:
-        unique_together = ['enrollment', 'lesson']
+        unique_together = ["enrollment", "lesson"]
