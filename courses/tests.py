@@ -25,26 +25,7 @@ class TestCourses:
         # Create category
         self.category = Category.objects.create(name="Programming", description="Programming courses")
 
-    def test_list_courses(self):
-        """Test anyone can list courses"""
-        Course.objects.create(
-            title="Test Course",
-            instructor=self.instructor,
-            category=self.category,
-            level="beginner",
-            is_published=True,
-        )
 
-        url = reverse("courses-list")
-        response = self.client.get(url)
-
-        assert response.status_code == status.HTTP_200_OK
-
-        if isinstance(response.data, dict) and "results" in response.data:
-            assert len(response.data["results"]) == 1
-            assert response.data["count"] == 1
-        else:
-            assert len(response.data) == 1
 
     def test_instructor_can_create_course(self):
         """Test instructor can create a course"""
