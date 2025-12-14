@@ -38,7 +38,6 @@ urlpatterns = [
     path("api/", include("enrollments.urls")),
     path("api/", include("quizzes.urls")),
     path("api/", include("ratings.urls")),
-
 ]
 
 if settings.DEBUG:

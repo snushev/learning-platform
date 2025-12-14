@@ -25,12 +25,13 @@ class Course(models.Model):
     is_published = models.BooleanField(default=False)
     enrollment_count = models.IntegerField(default=0, editable=False)
     average_rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.0)
-    
+
     def update_average_rating(self):
         from ratings.models import CourseRating
+
         ratings = CourseRating.objects.filter(course=self)
         if ratings.exists():
-            avg = ratings.aggregate(models.Avg('rating'))['rating__avg']
+            avg = ratings.aggregate(models.Avg("rating"))["rating__avg"]
             self.average_rating = round(avg, 2)
         else:
             self.average_rating = 0.0
@@ -43,4 +44,4 @@ class Course(models.Model):
         return self.enrollment_count
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
