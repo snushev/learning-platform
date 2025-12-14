@@ -25,8 +25,6 @@ class TestCourses:
         # Create category
         self.category = Category.objects.create(name="Programming", description="Programming courses")
 
-
-
     def test_instructor_can_create_course(self):
         """Test instructor can create a course"""
         self.client.force_authenticate(user=self.instructor)
