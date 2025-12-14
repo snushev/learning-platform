@@ -1,0 +1,5 @@
+# Ignore vendored/generated files in language stats
+static/* linguist-vendored
+media/* linguist-vendored
+*.min.js linguist-vendored
+*.min.css linguist-vendored
