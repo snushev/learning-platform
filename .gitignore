@@ -8,6 +8,7 @@ env/
 venv/
 .venv/
 .pytest_cache/
+static/
 
 # Django
 db.sqlite3

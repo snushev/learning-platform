@@ -25,9 +25,7 @@ class TestUserAuthentication:
     def test_user_login(self):
         """Test user can login with correct credentials"""
         # Create user
-        User.objects.create_user(
-            username="testuser", email="test@example.com", password="testpass123", role="Student"
-        )
+        User.objects.create_user(username="testuser", email="test@example.com", password="testpass123", role="Student")
 
         url = reverse("login")
         data = {"login": "testuser", "password": "testpass123"}
