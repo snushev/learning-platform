@@ -29,8 +29,8 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=Enrollment.objects.all(),
-                fields=['student', 'course'],
-                message="Student is already enrolled for this course." 
+                fields=["student", "course"],
+                message="Student is already enrolled for this course.",
             )
         ]
 

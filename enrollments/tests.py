@@ -13,16 +13,19 @@ class TestEnrollments:
     def setup_method(self):
         self.client = APIClient()
 
-        self.instructor = User.objects.create_user(username="instructor", password="pass123", email="instructor@enroll.com", role="Instructor")
+        self.instructor = User.objects.create_user(
+            username="instructor", password="pass123", email="instructor@enroll.com", role="Instructor"
+        )
 
-        self.student = User.objects.create_user(username="student", password="pass123", email="student@enroll.com", role="Student")
+        self.student = User.objects.create_user(
+            username="student", password="pass123", email="student@enroll.com", role="Student"
+        )
 
         category = Category.objects.create(name="Programming")
 
         self.course = Course.objects.create(
             title="Test Course", instructor=self.instructor, category=category, level="beginner", is_published=True
         )
-
 
     def test_cannot_enroll_twice(self):
         """Test student cannot enroll in same course twice"""

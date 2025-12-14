@@ -13,10 +13,14 @@ class TestCourses:
         self.client = APIClient()
 
         # Create instructor
-        self.instructor = User.objects.create_user(username="instructor", password="pass123", email="instructor@courses.com", role="Instructor")
+        self.instructor = User.objects.create_user(
+            username="instructor", password="pass123", email="instructor@courses.com", role="Instructor"
+        )
 
         # Create student
-        self.student = User.objects.create_user(username="student", password="pass123", email="student@courses.com", role="Student")
+        self.student = User.objects.create_user(
+            username="student", password="pass123", email="student@courses.com", role="Student"
+        )
 
         # Create category
         self.category = Category.objects.create(name="Programming", description="Programming courses")
@@ -38,7 +42,7 @@ class TestCourses:
 
         if isinstance(response.data, dict) and "results" in response.data:
             assert len(response.data["results"]) == 1
-            assert response.data["count"] == 1 
+            assert response.data["count"] == 1
         else:
             assert len(response.data) == 1
 
